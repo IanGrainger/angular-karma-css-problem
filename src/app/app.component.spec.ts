@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { parse } from 'css';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
@@ -26,6 +25,16 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('angular-karma-css-problem app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain(
+      'angular-karma-css-problem app is running!'
+    );
+  });
+
+  it('shouldnt error looking for class', () => {
+    const css = 'a-class-to-find';
+    const ast = parse(`selector { ${css} }`, {
+      silent: true,
+    }).stylesheet;
+    expect(ast.parsingErrors.length).toEqual(0);
   });
 });
