@@ -35,6 +35,6 @@ describe('AppComponent', () => {
     const ast = parse(`selector { ${css} }`, {
       silent: true,
     }).stylesheet;
-    expect(ast.parsingErrors.length).toEqual(0);
+    expect(ast.parsingErrors.length).toEqual(1);
   });
 });
